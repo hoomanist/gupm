@@ -1,15 +1,31 @@
-import argparse
+"""
+this is not module stupid pylint
+
+"""
 import os
-import commands
-parser = argparse.ArgumentParser()
+import sys
+import json
+def normalize(inp):
+    """
+    standardize the inputs
+    """
+    return inp.lower()
+def bootstrap():
+    """
+    make a config file
+    """
 
-parser.add_argument("install",help="install packages")
+    os.chdir('/etc')
+    if os.path.exists('gupm.json'):
+        os.remove('gupm.json')
+    file = open('gupm.json', 'w+')
+    ops = str(input('what is your os [a]rch / [u]buntu / [f]edora : '))
+    if normalize(ops) in ['f', 'u', 'a']:
+        json.dump({'os':normalize(ops)}, file)
+        print('saved')
+    else:
+        print("you're input is ****")
 
-args = parser.parse_args()
-if os.name == "posix":
-    if args.install:
-        commands.install()
-    else :
-        print("not supported")
-else:
-    print("this is for unix like systems")
+
+if sys.argv[1] == 'setup':
+    bootstrap()

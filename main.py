@@ -35,7 +35,28 @@ def install(package, config):
     elif config["os"] == 'a':
         os.system(f"pacman -S {package}")
 
-
+def remove(package, config):
+    """
+    remove packages
+    """
+    if config["os"] == 'u':
+        os.system(f"apt remove {package}")
+    elif config["os"] == 'f':
+        os.system(f"dnf remove {package}")
+    elif config["os"] == 'a':
+        os.system(f"pacman -R {package}")  
+        
+def upgradepackage(package, config):
+    """
+    upgrade package
+    """
+    if config["os"] == 'u':
+        os.system(f"apt uograde {package}")
+    elif config["os"] == 'f':
+        os.system(f"dnf install {package}") #it will update if there was a new version
+    elif config["os"] == 'a':
+        os.system(f"pacman -S {package}") #it will update if there was a new version
+     
 if __name__ == "__main__":
     if sys.argv[1] == 'setup':
         bootstrap()
@@ -45,4 +66,8 @@ if __name__ == "__main__":
         CONFIG = json.load(FILE)
         if sys.argv[1] == 'install':
             install(sys.argv[2], CONFIG)
-            
+        elif sys.argv[1] == 'remove':
+            remove(sys.argv[2], CONFIG)
+        elif sys.argv[1] == 'up':
+            upgradepackage(sys.argv[2], CONFIG)
+        

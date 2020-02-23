@@ -51,7 +51,7 @@ def upgradepackage(package, config):
     upgrade package
     """
     if config["os"] == 'u':
-        os.system(f"apt uograde {package}")
+        os.system(f"apt install {package}") #it will update if there was a new version
     elif config["os"] == 'f':
         os.system(f"dnf install {package}") #it will update if there was a new version
     elif config["os"] == 'a':

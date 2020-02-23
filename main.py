@@ -1,6 +1,5 @@
 """
 this is not module stupid pylint
-
 """
 import os
 import sys
@@ -14,7 +13,6 @@ def bootstrap():
     """
     make a config file
     """
-
     os.chdir('/etc')
     if os.path.exists('gupm.json'):
         os.remove('gupm.json')
@@ -26,6 +24,6 @@ def bootstrap():
     else:
         print("you're input is ****")
 
-
-if sys.argv[1] == 'setup':
-    bootstrap()
+if __name__ == "__main__":
+    if sys.argv[1] == 'setup':
+        bootstrap()

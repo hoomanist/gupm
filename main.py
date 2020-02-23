@@ -24,6 +24,25 @@ def bootstrap():
     else:
         print("you're input is ****")
 
+def install(package, config):
+    """
+    install package
+    """
+    if config["os"] == 'u':
+        os.system(f"apt install {package}")
+    elif config["os"] == 'f':
+        os.system(f"dnf install {package}")
+    elif config["os"] == 'a':
+        os.system(f"pacman -S {package}")
+
+
 if __name__ == "__main__":
     if sys.argv[1] == 'setup':
         bootstrap()
+    else:
+        os.chdir('/etc')
+        FILE = open('gupm.json', 'r')
+        CONFIG = json.load(FILE)
+        if sys.argv[1] == 'install':
+            install(sys.argv[2], CONFIG)
+            

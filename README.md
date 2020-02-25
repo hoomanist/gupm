@@ -25,7 +25,6 @@ for remove a package
 ```
 gupm remove pkgname
 ```
-
 for upgrade a specific package
 ```
 gupm up pkgname

@@ -56,7 +56,19 @@ def upgradepackage(package, config):
         os.system(f"dnf install {package}") #it will update if there was a new version
     elif config["os"] == 'a':
         os.system(f"pacman -S {package}") #it will update if there was a new version
-     
+
+def updateRepo(config):
+    """
+    update repository database
+    """
+    if config['os'] == 'u':
+        os.system(f'apt update')
+    elif config['os'] == 'f':
+        os.system(f'dnf update')
+    elif config['os'] == 'a':
+        os.system(f'pacman -Sy')
+
+
 if __name__ == "__main__":
     if sys.argv[1] == 'setup':
         bootstrap()
@@ -70,4 +82,6 @@ if __name__ == "__main__":
             remove(sys.argv[2], CONFIG)
         elif sys.argv[1] == 'up':
             upgradepackage(sys.argv[2], CONFIG)
+        elif sys.argv[1] == 'update':
+            updateRepo(CONFIG)
         

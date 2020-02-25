@@ -62,12 +62,20 @@ def updateRepo(config):
     update repository database
     """
     if config['os'] == 'u':
-        os.system(f'apt update')
+        os.system('apt update')
     elif config['os'] == 'f':
-        os.system(f'dnf update')
+        os.system('dnf update')
     elif config['os'] == 'a':
-        os.system(f'pacman -Sy')
+        os.system('pacman -Sy')
 
+
+def UpgradeAllPackages(config):
+    if config['os'] == 'u':
+        os.system('apt upgrade')
+    elif config['os'] == 'f':
+        os.system('dnf upgrade')
+    elif config['os'] ==  'a':
+        os.system('pacman -Syu')
 
 if __name__ == "__main__":
     if sys.argv[1] == 'setup':
@@ -84,4 +92,6 @@ if __name__ == "__main__":
             upgradepackage(sys.argv[2], CONFIG)
         elif sys.argv[1] == 'update':
             updateRepo(CONFIG)
+        elif sys.argv[1] == 'upgrade':
+            UpgradeAllPackages(CONFIG)
         

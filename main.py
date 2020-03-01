@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 this is not module stupid pylint
 """

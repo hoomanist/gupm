@@ -29,3 +29,5 @@ for upgrade a specific package
 ```
 gupm up pkgname
 ```
+### TODO
+[] make it interactive

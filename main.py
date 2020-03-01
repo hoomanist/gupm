@@ -5,6 +5,7 @@ this is not module stupid pylint
 import os
 import sys
 import json
+import subprocess
 def normalize(inp):
     """
     standardize the inputs
@@ -30,53 +31,91 @@ def install(package, config):
     install package
     """
     if config["os"] == 'u':
-        os.system(f"apt install {package}")
+        command = subprocess.run(['apt','install',package],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'package {package} installed')
+        else:
+            print(command.stderr)
     elif config["os"] == 'f':
-        os.system(f"dnf install {package}")
-    elif config["os"] == 'a':
-        os.system(f"pacman -S {package}")
-
+        command = subprocess.run(['dnf','install',package, '--noconfirm'],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'package {package} installed')
+        else:
+            print(command.stderr) 
+    elif config['os'] == 'a':
+        command = subprocess.run(['pacman','-S',package],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'package {package} installed')
+        else:
+            print(command.stderr)
 def remove(package, config):
     """
     remove packages
     """
     if config["os"] == 'u':
-        os.system(f"apt remove {package}")
+        command = subprocess.run(['apt','remove',package],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'package {package} removed')
+        else:
+            print(command.stderr)
     elif config["os"] == 'f':
-        os.system(f"dnf remove {package}")
+        command = subprocess.run(['dnf','remove',package],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'package {package} removed')
+        else:
+            print(command.stderr)
     elif config["os"] == 'a':
-        os.system(f"pacman -R {package}")  
+        command = subprocess.run(['pacman','-R',package],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'package {package} removed')
+        else:
+            print(command.stderr)
         
-def upgradepackage(package, config):
-    """
-    upgrade package
-    """
-    if config["os"] == 'u':
-        os.system(f"apt install {package}") #it will update if there was a new version
-    elif config["os"] == 'f':
-        os.system(f"dnf install {package}") #it will update if there was a new version
-    elif config["os"] == 'a':
-        os.system(f"pacman -S {package}") #it will update if there was a new version
 
 def updateRepo(config):
     """
     update repository database
     """
     if config['os'] == 'u':
-        os.system('apt update')
+        command = subprocess.run(['apt', 'update'],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'repositories are updated')
+        else:
+            print(command.stderr)
     elif config['os'] == 'f':
-        os.system('dnf update')
+        command = subprocess.run(['dnf','update'],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'repositories are updated')
+        else:
+            print(command.stderr)
     elif config['os'] == 'a':
-        os.system('pacman -Sy')
+        command = subprocess.run(['pacman','-Sy'],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'system is upgraded')
+        else:
+            print(command.stderr)
 
 
 def UpgradeAllPackages(config):
     if config['os'] == 'u':
-        os.system('apt upgrade')
+        command = subprocess.run(['apt','upgrade'],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'system is upgraded')
+        else:
+            print(command.stderr)
+
     elif config['os'] == 'f':
-        os.system('dnf upgrade')
+        command = subprocess.run(['dnf','upgrade'],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'repositories are updated')
+        else:
+            print(command.stderr)
     elif config['os'] ==  'a':
-        os.system('pacman -Syu')
+        command = subprocess.run(['pacman','-Syu'],stderr=subprocess.PIPE)
+        if command.stderr == '':
+            print(f'system is upgraded')
+        else:
+            print(command.stderr)
 
 if __name__ == "__main__":
     if sys.argv[1] == 'setup':
@@ -90,7 +129,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'remove':
             remove(sys.argv[2], CONFIG)
         elif sys.argv[1] == 'up':
-            upgradepackage(sys.argv[2], CONFIG)
+            install(sys.argv[2], CONFIG) # the same work
         elif sys.argv[1] == 'update':
             updateRepo(CONFIG)
         elif sys.argv[1] == 'upgrade':

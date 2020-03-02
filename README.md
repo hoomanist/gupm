@@ -31,9 +31,12 @@ gupm up pkgname
 ```
 ### TODO
 [ ] make it interactive because of subprocess.run()
+
 [ ] writing helps (thanks Arcush)
 
 ### Acknowledgements
 thanks https://www.reddit.com/user/SqueamishOssifrage for slogan
+
 thanks https://www.reddit.com/user/AlternativeOstrich7 for suggestion of use subprocess.run()
+
 thanks Arcush from persian arch forum for help for writing help

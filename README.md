@@ -35,6 +35,8 @@ gupm up pkgname
 
 [ ] writing helps (thanks Arcush)
 
+[ ] add search and auto search (thanks https://www.reddit.com/user/mikeymop/)
+
 ### Acknowledgements
 Thanks to Reddit user u/SqueamishOssifrage for slogan
 
